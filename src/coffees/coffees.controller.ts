@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -16,8 +7,8 @@ export class CoffeesController {
 
   //   Using the @Res decorator, you are able to access the response as it's used in Express
   //   This is not the ideal way to use though, so use with caution
-  findAll(@Res() response) {
-    return response.status(200).send('This action returns all coffees');
+  findAll() {
+    return 'This action returns all coffees';
   }
 
   //   Return details of single coffee
@@ -32,8 +23,7 @@ export class CoffeesController {
   }
 
   @Post()
-  //   Use HttpCode with HttpStatus as below to customize status responses
-  @HttpCode(HttpStatus.GONE)
+
   //   Using the Body Decorator, you can access the body of the request
   create(@Body() body) {
     return body;
