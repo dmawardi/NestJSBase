@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
+import { CreateCoffeeDto } from './dto/create-coffee.dto';
+import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -39,14 +41,15 @@ export class CoffeesController {
   //   Post Decorator for post requests updating whole record routes
   @Post()
   //   Using the Body Decorator, you can access the body of the request
-  create(@Body() body) {
-    return this.coffeesService.create(body);
+  //   You can pass in a dto here to ensure it conforms to our type structure
+  create(@Body() CreateCoffeeDto: CreateCoffeeDto) {
+    return this.coffeesService.create(CreateCoffeeDto);
   }
 
   // Patch decorator for partially updating record routes
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return this.coffeesService.update(id, body);
+  update(@Param('id') id: string, @Body() UpdateCoffeeDto: UpdateCoffeeDto) {
+    return this.coffeesService.update(id, UpdateCoffeeDto);
   }
 
   //   Delete Decorator for deletion request routes
