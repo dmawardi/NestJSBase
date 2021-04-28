@@ -13,6 +13,8 @@ async function bootstrap() {
       whitelist: true,
       // If any non whitelisted data is detected, automatically forbid from proceeding
       forbidNonWhitelisted: true,
+      // Automatically perform type conversion. eg) numbers and booleans
+      transform: true,
     }),
   );
   await app.listen(3000);

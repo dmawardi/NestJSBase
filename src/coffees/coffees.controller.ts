@@ -34,7 +34,8 @@ export class CoffeesController {
   //     return `This action returns #${params.id} coffees`;
   //   }
   // The version below is updated to only use one parameter
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
+    console.log(typeof id);
     return this.coffeesService.findOne(id);
   }
 
@@ -42,20 +43,21 @@ export class CoffeesController {
   @Post()
   //   Using the Body Decorator, you can access the body of the request
   //   You can pass in a dto here to ensure it conforms to our type structure
-  create(@Body() CreateCoffeeDto: CreateCoffeeDto) {
+  create(@Body() createCoffeeDto: CreateCoffeeDto) {
+    console.log(createCoffeeDto instanceof CreateCoffeeDto);
     return this.coffeesService.create(CreateCoffeeDto);
   }
 
   // Patch decorator for partially updating record routes
   @Patch(':id')
-  update(@Param('id') id: string, @Body() UpdateCoffeeDto: UpdateCoffeeDto) {
+  update(@Param('id') id: number, @Body() UpdateCoffeeDto: UpdateCoffeeDto) {
     return this.coffeesService.update(id, UpdateCoffeeDto);
   }
 
   //   Delete Decorator for deletion request routes
   @Delete(':id')
   //   Methods for this route below
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: number) {
     return this.coffeesService.remove(id);
   }
 }
