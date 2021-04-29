@@ -1,0 +1,12 @@
+# varsion: '3.3'
+
+services:
+  #   Gives instruction to create a Postgres SQL DB
+  db:
+    image: postgres
+    restart: always
+    ports:
+      # Internally set port as 5432. Externally set port as 5432
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: pass123
