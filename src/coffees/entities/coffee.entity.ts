@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Flavor } from './flavor.entity';
 
 // TypeOrm @Entity decorator will export as Entity
 // default: table name will be class name in lowercase
@@ -15,7 +22,9 @@ export class Coffee {
   @Column()
   brand: string;
 
-  // JSON format for arrays, nullable = optional
-  @Column('json', { nullable: true })
+  // JoinTable specifies owner entity
+  @JoinTable()
+  // Indicates many to many relationship
+  @ManyToMany((type) => Flavor, (Flavor) => Flavor.coffees)
   flavors: string[];
 }

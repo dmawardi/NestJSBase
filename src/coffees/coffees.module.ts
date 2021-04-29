@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
+import { Flavor } from './entities/flavor.entity';
 
 // Module decorator accepts single object that contains context of module in relation to other
 @Module({
@@ -12,7 +13,10 @@ import { Coffee } from './entities/coffee.entity';
   // exports:,
   // Providors external that this module needs for use
   // Use TypeOrm here with .forFeature (as it's in submodule) and pass in array of entities
-  imports: [TypeOrmModule.forFeature([Coffee])],
+  imports: [
+    TypeOrmModule.forFeature([Coffee]),
+    TypeOrmModule.forFeature([Flavor]),
+  ],
   // Services that need to be instantiated by Nest Injector
   // Only available within this module itself
   providers: [CoffeesService],
