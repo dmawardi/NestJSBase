@@ -45,19 +45,19 @@ export class CoffeesController {
   //   You can pass in a dto here to ensure it conforms to our type structure
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
     console.log(createCoffeeDto instanceof CreateCoffeeDto);
-    return this.coffeesService.create(CreateCoffeeDto);
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   // Patch decorator for partially updating record routes
   @Patch(':id')
-  update(@Param('id') id: number, @Body() UpdateCoffeeDto: UpdateCoffeeDto) {
-    return this.coffeesService.update(id, UpdateCoffeeDto);
+  update(@Param('id') id: string, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+    return this.coffeesService.update(id, updateCoffeeDto);
   }
 
   //   Delete Decorator for deletion request routes
   @Delete(':id')
   //   Methods for this route below
-  delete(@Param('id') id: number) {
+  delete(@Param('id') id: string) {
     return this.coffeesService.remove(id);
   }
 }

@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     CoffeesModule,
-    // import TypeOrm with config
+    // import TypeOrm (using forRoot as it's root file) with config
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
