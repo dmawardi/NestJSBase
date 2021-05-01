@@ -2,7 +2,11 @@ import { NotFoundException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { off } from 'node:process';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { OffsetWithoutLimitNotSupportedError, Repository } from 'typeorm';
+import {
+  Connection,
+  OffsetWithoutLimitNotSupportedError,
+  Repository,
+} from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
@@ -16,6 +20,7 @@ export class CoffeesService {
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
+    private readonly connection: Connection,
   ) {}
 
   findAll(paginationQuery: PaginationQueryDto) {
@@ -85,6 +90,37 @@ export class CoffeesService {
     const coffee = await this.coffeeRepository.findOne(id);
     // Remove from database
     return this.coffeeRepository.remove(coffee);
+  }
+
+  // Recommendation Feature
+  //
+  async recommendCoffee(coffee: Coffee) {
+    const queryRunner = this.connection.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    // After starting transaction, wrap in try, catch finally
+    try {
+      coffee.recommendations++;
+
+      const recommendEvent = new Event();
+      recommendEvent.name = 'recommend_coffee';
+      recommendEvent.type = 'coffee';
+      recommendEvent.payload = { coffeeId: coffee.id };
+
+      // Send instructions to save coffee and recommendEvent
+      await queryRunner.manager.save(coffee);
+      await queryRunner.manager.save(recommendEvent);
+
+      // Await for query runner to commit
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      // rollback all changes
+      await queryRunner.rollbackTransaction();
+    } finally {
+      // Release the connection
+      await queryRunner.release();
+    }
   }
 
   //
