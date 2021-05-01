@@ -15,6 +15,11 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       // Automatically perform type conversion. eg) numbers and booleans
       transform: true,
+      transformOptions: {
+        // Types are assumed and don't need to be explicitly state
+        // Auto converted
+        enableImplicitConversion: true,
+      },
     }),
   );
   await app.listen(3000);

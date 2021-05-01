@@ -7,5 +7,5 @@ export class UpdateCoffeeDto extends PartialType(CreateCoffeeDto) {
   // The addition of a question mark makes the input optional
   //   readonly name?: string;
   //   readonly brand?: string;
-  //   readonly flavors?: string[];
+  //   readonly flavors?: Flavor[];
 }

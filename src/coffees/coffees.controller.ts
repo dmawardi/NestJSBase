@@ -11,6 +11,7 @@ import {
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -22,9 +23,8 @@ export class CoffeesController {
   // Return all coffees
   @Get()
   //   Query parameter below allows you to use pagination: coffees?limit=20&offset=10
-  findAll(@Query() paginationQuery) {
-    const { limit, offset } = paginationQuery;
-    return this.coffeesService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    return this.coffeesService.findAll(paginationQuery);
   }
 
   //   Return details of single coffee using nested URL

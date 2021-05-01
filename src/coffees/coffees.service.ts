@@ -1,6 +1,8 @@
 import { NotFoundException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { off } from 'node:process';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { OffsetWithoutLimitNotSupportedError, Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
@@ -16,10 +18,14 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
   ) {}
 
-  findAll() {
+  findAll(paginationQuery: PaginationQueryDto) {
+    const { limit, offset } = paginationQuery;
     return this.coffeeRepository.find({
       // List the name of the columns within the coffee entity you want to pull
       relations: ['flavors'],
+      // pagination settings
+      skip: offset,
+      take: limit,
     });
   }
 
