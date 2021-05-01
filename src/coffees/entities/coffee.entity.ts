@@ -25,6 +25,16 @@ export class Coffee {
   // JoinTable specifies owner entity
   @JoinTable()
   // Indicates many to many relationship
-  @ManyToMany((type) => Flavor, (Flavor) => Flavor.coffees)
-  flavors: string[];
+  @ManyToMany(
+    // param1: Type of input
+    (type) => Flavor,
+    // Param2: Related columns on other end
+    (Flavor) => Flavor.coffees,
+    // Options Object
+    {
+      // Allows inserts and updates from coffee object to push through sub tables
+      cascade: true,
+    },
+  )
+  flavors: Flavor[];
 }
