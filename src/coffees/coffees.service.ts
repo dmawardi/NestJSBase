@@ -2,6 +2,7 @@ import { NotFoundException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { off } from 'node:process';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { Event } from 'src/events/entities/event.entity';
 import {
   Connection,
   OffsetWithoutLimitNotSupportedError,
