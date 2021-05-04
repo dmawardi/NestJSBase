@@ -11,12 +11,17 @@ import { Event } from '../events/entities/event.entity';
   // API routes that we want this model to instantiate
   controllers: [CoffeesController],
   // Providers within this module that need to be available anywhere this module is imported
-  // exports:,
+  exports: [CoffeesService],
   // Providors external that this module needs for use
   // Use TypeOrm here with .forFeature (as it's in submodule) and pass in array of entities
   imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
   // Services that need to be instantiated by Nest Injector
   // Only available within this module itself
-  providers: [CoffeesService],
+  providers: [
+    {
+      provide: CoffeesService,
+      useClass: CoffeesService,
+    },
+  ],
 })
 export class CoffeesModule {}

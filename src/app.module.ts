@@ -5,9 +5,11 @@ import { CoffeesController } from './coffees/coffees.controller';
 import { CoffeesService } from './coffees/coffees.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 
 @Module({
   imports: [
+    CoffeeRatingModule,
     CoffeesModule,
     // import TypeOrm (using forRoot as it's root file) with config
     TypeOrmModule.forRoot({
@@ -24,6 +26,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       // Great for development. Disable for production
       synchronize: true,
     }),
+    CoffeeRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

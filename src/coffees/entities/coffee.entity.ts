@@ -16,7 +16,7 @@ export class Coffee {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ default: '-' })
   name: string;
 
   @Column({ nullable: true })
