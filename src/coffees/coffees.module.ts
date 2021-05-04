@@ -5,6 +5,10 @@ import { CoffeesService } from './coffees.service';
 import { Coffee } from './entities/coffee.entity';
 import { Flavor } from './entities/flavor.entity';
 import { Event } from '../events/entities/event.entity';
+import { COFFEE_BRANDS } from './coffees.constants';
+
+// You can create a new class and use it in providers below with useValue
+// class MockCoffeesService {}
 
 // Module decorator accepts single object that contains context of module in relation to other
 @Module({
@@ -18,9 +22,10 @@ import { Event } from '../events/entities/event.entity';
   // Services that need to be instantiated by Nest Injector
   // Only available within this module itself
   providers: [
+    CoffeesService,
     {
-      provide: CoffeesService,
-      useClass: CoffeesService,
+      provide: COFFEE_BRANDS,
+      useValue: ['nescafe', 'Buddy_Brews'],
     },
   ],
 })
