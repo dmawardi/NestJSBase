@@ -10,6 +10,10 @@ import { COFFEE_BRANDS } from './coffees.constants';
 // You can create a new class and use it in providers below with useValue
 // class MockCoffeesService {}
 
+class ConfigService {}
+class DevelopmentConfigService {}
+class ProductionConfigService {}
+
 // Module decorator accepts single object that contains context of module in relation to other
 @Module({
   // API routes that we want this model to instantiate
@@ -26,6 +30,14 @@ import { COFFEE_BRANDS } from './coffees.constants';
     {
       provide: COFFEE_BRANDS,
       useValue: ['nescafe', 'Buddy_Brews'],
+    },
+    {
+      // Example config service that would alter configuration based on environment
+      provide: ConfigService,
+      useClass:
+        process.env.NODE_ENV === 'development'
+          ? DevelopmentConfigService
+          : ProductionConfigService,
     },
   ],
 })
