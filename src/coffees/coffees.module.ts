@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Injectable, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
@@ -10,9 +10,18 @@ import { COFFEE_BRANDS } from './coffees.constants';
 // You can create a new class and use it in providers below with useValue
 // class MockCoffeesService {}
 
+// For illustration of useClass provider method
 class ConfigService {}
 class DevelopmentConfigService {}
 class ProductionConfigService {}
+
+// Factory Provider class
+@Injectable()
+export class CoffeeBrandsFactory {
+  create() {
+    return ['buddy brew', 'nesCafe'];
+  }
+}
 
 // Module decorator accepts single object that contains context of module in relation to other
 @Module({
@@ -27,9 +36,13 @@ class ProductionConfigService {}
   // Only available within this module itself
   providers: [
     CoffeesService,
+    CoffeeBrandsFactory,
     {
       provide: COFFEE_BRANDS,
-      useValue: ['nescafe', 'Buddy_Brews'],
+      // useValue option
+      // useValue: ['nescafe', 'Buddy_Brews'],
+      // useFactory option
+      useFactory: () => ['nescafe', 'Buddy_Brews'],
     },
     {
       // Example config service that would alter configuration based on environment
