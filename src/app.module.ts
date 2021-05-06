@@ -14,6 +14,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot(),
     CoffeeRatingModule,
     CoffeesModule,
+    CoffeeRatingModule,
+
     // import TypeOrm (using forRoot as it's root file) with config
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -30,7 +32,6 @@ import { ConfigModule } from '@nestjs/config';
       // Great for development. Disable for production
       synchronize: true,
     }),
-    CoffeeRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

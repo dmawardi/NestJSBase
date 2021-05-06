@@ -6,14 +6,10 @@ import { Coffee } from './entities/coffee.entity';
 import { Flavor } from './entities/flavor.entity';
 import { Event } from '../events/entities/event.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
+import { ConfigModule } from '@nestjs/config';
 
 // You can create a new class and use it in providers below with useValue
 // class MockCoffeesService {}
-
-// For illustration of useClass provider method
-class ConfigService {}
-class DevelopmentConfigService {}
-class ProductionConfigService {}
 
 // Factory Provider class
 @Injectable()
@@ -31,7 +27,11 @@ export class CoffeeBrandsFactory {
   exports: [CoffeesService],
   // Providors external that this module needs for use
   // Use TypeOrm here with .forFeature (as it's in submodule) and pass in array of entities
-  imports: [TypeOrmModule.forFeature([Coffee, Flavor, Event])],
+  imports: [
+    // Import Config module to access .env variables
+    TypeOrmModule.forFeature([Coffee, Flavor, Event]),
+    ConfigModule,
+  ],
   // Services that need to be instantiated by Nest Injector
   // Only available within this module itself
   providers: [
@@ -43,14 +43,6 @@ export class CoffeeBrandsFactory {
       // useValue: ['nescafe', 'Buddy_Brews'],
       // useFactory option
       useFactory: () => ['nescafe', 'Buddy_Brews'],
-    },
-    {
-      // Example config service that would alter configuration based on environment
-      provide: ConfigService,
-      useClass:
-        process.env.NODE_ENV === 'development'
-          ? DevelopmentConfigService
-          : ProductionConfigService,
     },
   ],
 })

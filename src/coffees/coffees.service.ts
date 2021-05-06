@@ -13,6 +13,7 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
 import { Flavor } from './entities/flavor.entity';
 import { COFFEE_BRANDS } from './coffees.constants';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class CoffeesService {
@@ -23,12 +24,21 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
+    private readonly configService: ConfigService,
     // To add a non-class based provider
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log('Initializing............');
     // code in here will run upon init
-    console.log(coffeeBrands);
+    console.log('Initializing............');
+    console.log(this.configService);
+
+    // Use configService to grab databaseHost from .env
+    // const databaseHost = this.configService.get<string>(
+    //   'DATABASE_HOST',
+    //   // if value not found, fallback to localhost
+    //   // 'localhost',
+    // );
+    // console.log(databaseHost);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
