@@ -12,6 +12,7 @@ export class ApiKeyGuard implements CanActivate {
 
     // Grab header
     const authHeader = request.header('Authorization');
+    // Checks if auth header is equal to api key
     return authHeader === process.env.API_KEY;
   }
 }

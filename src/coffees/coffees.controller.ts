@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  SetMetadata,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
@@ -22,6 +23,8 @@ export class CoffeesController {
 
   // Return all coffees
   @Get()
+  // Set metadata
+  @SetMetadata('isPublic', true)
   //   Query parameter below allows you to use pagination: coffees?limit=20&offset=10
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeesService.findAll(paginationQuery);
