@@ -2,12 +2,18 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 import { WrapResponseInterceptor } from './common/interceptors/wrap-response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  // Add global interceptor
-  app.useGlobalInterceptors(new WrapResponseInterceptor());
+  // Add global interceptors
+  // wrap response data in data attribute & timeout after 3 seconds
+  app.useGlobalInterceptors(
+    new WrapResponseInterceptor(),
+    new TimeoutInterceptor(),
+  );
+  app.useGlobalInterceptors();
   // Global implementation of guard
   // app.useGlobalGuards(new ApiKeyGuard());
   // Our custom HTTP exception filter

@@ -29,7 +29,8 @@ export class CoffeesController {
   // Best practice (below)
   @Public()
   //   Query parameter below allows you to use pagination: coffees?limit=20&offset=10
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
     return this.coffeesService.findAll(paginationQuery);
   }
 
