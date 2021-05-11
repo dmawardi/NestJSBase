@@ -13,7 +13,6 @@ async function bootstrap() {
     new WrapResponseInterceptor(),
     new TimeoutInterceptor(),
   );
-  app.useGlobalInterceptors();
   // Global implementation of guard
   // app.useGlobalGuards(new ApiKeyGuard());
   // Our custom HTTP exception filter
