@@ -1,5 +1,5 @@
 // PartialType allows us to return the class of the object passed to to it
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateCoffeeDto } from './create-coffee.dto';
 
 // PartialType replicates the CreateCoffeeDto but with optional inputs

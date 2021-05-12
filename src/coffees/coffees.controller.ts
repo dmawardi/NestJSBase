@@ -16,23 +16,25 @@ import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   // The below is added for the coffees service
   //   private:available in this class only; readonly: best practice, same effect;
   // then, declare instance of class
   constructor(private readonly coffeesService: CoffeesService) {}
-
-  // Return all coffees
-  @Get()
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
   // Set metadata (not best practice)
   // @SetMetadata('isPublic', true)
-  // Best practice (below)
+  // Best practice: make own decorator (below)
   @Public()
-  //   Query parameter below allows you to use pagination: coffees?limit=20&offset=10
+  // Return all coffees
+  @Get()
   async findAll(
     @Protocol('https') protocol: string,
+    //   Query parameter below allows you to use pagination: coffees?limit=20&offset=10
     @Query() paginationQuery: PaginationQueryDto,
   ) {
     // Log out variable from custom decorator Protocol
