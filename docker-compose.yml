@@ -10,3 +10,11 @@ services:
       - '5432:5432'
     environment:
       POSTGRES_PASSWORD: pass123
+  test-db:
+    image: postgres
+    restart: always
+    ports:
+      # Internally set port as 5433. Externally set port as 5432
+      - '5433:5432'
+    environment:
+      POSTGRES_PASSWORD: pass123
