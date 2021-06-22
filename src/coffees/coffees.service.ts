@@ -1,8 +1,8 @@
 import { NotFoundException, Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { off } from 'node:process';
-import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
-import { Event } from 'src/events/entities/event.entity';
+import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
+import { Event } from '../events/entities/event.entity';
 import {
   Connection,
   OffsetWithoutLimitNotSupportedError,
@@ -23,10 +23,10 @@ export class CoffeesService {
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
+    // To add a non-class based provider
+    // @Inject(COFFEE_BRANDS) coffeeBrands: string[],
     private readonly connection: Connection,
     private readonly configService: ConfigService,
-    // To add a non-class based provider
-    @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
     // code in here will run upon init
     console.log('Initializing............');
@@ -59,7 +59,7 @@ export class CoffeesService {
     // if coffee not found
     if (!coffee) {
       // Throw exception and return status not found
-      throw new NotFoundException(`Coffee #${id} is not found`);
+      throw new NotFoundException(`Coffee #${id} not found`);
     }
     // if coffee found
     return coffee;
