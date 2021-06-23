@@ -48,6 +48,7 @@ describe('CoffeesService', () => {
       ],
     }).compile();
 
+    // .get is for retrieving static instance declared within module
     // To retrieve request scope or transient scoped providers,
     // use resolve instead of get
     service = module.get<CoffeesService>(CoffeesService);
